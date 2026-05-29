@@ -1,0 +1,21 @@
+{
+  "auth_provider": "Supabase Auth (Lovable Cloud)",
+  "login_route": "/login",
+  "accounts_created_via": "signup API (auto-confirmed)",
+  "accounts": [
+    {
+      "role": "user",
+      "email": "lisa-test-user@test.com",
+      "password": "LisaLoops-Test-2024!",
+      "created": true,
+      "notes": "User role auto-assigned via handle_new_user trigger"
+    },
+    {
+      "role": "admin",
+      "email": "lisa-test-admin@test.com",
+      "password": "LisaLoops-Test-2024!",
+      "created": true,
+      "notes": "Admin role auto-assigned via handle_new_user trigger from app_role metadata"
+    }
+  ]
+}

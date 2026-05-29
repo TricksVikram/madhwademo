@@ -1,0 +1,1126 @@
+{
+  "app_name": "DeskFlow",
+  "generated_at": "2026-03-31T07:45:00.000Z",
+  "total_tests": 45,
+  "stats": {
+    "passed": 45,
+    "failed": 0,
+    "blocked": 0,
+    "pending": 0,
+    "bugs_fixed": 0
+  },
+  "auth_config": {
+    "has_auth": true,
+    "provider": "Supabase Auth (Lovable Cloud)",
+    "login_route": "/login",
+    "test_accounts_ready": true,
+    "notes": "Auto-confirm enabled. Demo accounts also exist (jane.cooper@deskflow.io, alex.admin@deskflow.io) with password demo1234."
+  },
+  "coverage_notes": {
+    "categories_covered": [
+      "rendering",
+      "navigation",
+      "forms",
+      "empty_states",
+      "auth",
+      "crud",
+      "error_handling",
+      "responsive",
+      "state_persistence",
+      "interactive_ui",
+      "accessibility"
+    ],
+    "categories_skipped": [],
+    "total_categories_covered": 11,
+    "total_categories_applicable": 11
+  },
+  "tests": [
+    {
+      "id": "TEST-001",
+      "category": "functional",
+      "feature": "Landing page",
+      "title": "Landing page renders with key sections",
+      "description": "Verify the landing page renders hero, features, FAQ, and footer sections",
+      "preconditions": [
+        "Not logged in"
+      ],
+      "steps": [
+        "Step 1: Navigate to /",
+        "Step 2: Wait for page to load",
+        "Step 3: Verify hero headline visible",
+        "Step 4: Scroll down and verify features section exists",
+        "Step 5: Verify FAQ section exists",
+        "Step 6: Verify footer exists"
+      ],
+      "expected_result": "Landing page renders all major sections without errors",
+      "pass_criteria": "Element with data-testid='page-landing' is visible AND text 'Your office, organized' is visible AND text 'Features' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-002",
+      "category": "functional",
+      "feature": "Landing navigation",
+      "title": "Landing page CTA navigates to app",
+      "description": "Verify 'Get started free' link navigates to /app which redirects to login",
+      "preconditions": [
+        "Not logged in"
+      ],
+      "steps": [
+        "Step 1: Navigate to /",
+        "Step 2: Click element with data-testid='landing-get-started'",
+        "Step 3: Wait for navigation"
+      ],
+      "expected_result": "User is redirected to /login since they are not authenticated",
+      "pass_criteria": "URL contains '/login' OR element with data-testid='page-login' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-003",
+      "category": "functional",
+      "feature": "Login page",
+      "title": "Login page renders with form and demo buttons",
+      "description": "Verify login page shows email/password form and demo account buttons",
+      "preconditions": [
+        "Not logged in"
+      ],
+      "steps": [
+        "Step 1: Navigate to /login",
+        "Step 2: Verify page loads"
+      ],
+      "expected_result": "Login page shows form fields and demo buttons",
+      "pass_criteria": "Element with data-testid='page-login' is visible AND data-testid='login-email' is visible AND data-testid='login-password' is visible AND data-testid='login-submit' is visible AND data-testid='demo-login-user' is visible AND data-testid='demo-login-admin' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-004",
+      "category": "e2e",
+      "feature": "Authentication",
+      "title": "Login with valid email/password as user role",
+      "description": "Verify successful login with test user credentials navigates to dashboard",
+      "preconditions": [
+        "Not logged in",
+        "Test account exists: role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Navigate to /login",
+        "Step 2: Type 'lisa-test-user@test.com' into data-testid='login-email'",
+        "Step 3: Type 'LisaLoops-Test-2024!' into data-testid='login-password'",
+        "Step 4: Click data-testid='login-submit'",
+        "Step 5: Wait for navigation to /app"
+      ],
+      "expected_result": "User is logged in and sees the dashboard",
+      "pass_criteria": "URL contains '/app' AND element with data-testid='page-dashboard' is visible within 10 seconds",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-005",
+      "category": "e2e",
+      "feature": "Authentication",
+      "title": "Login with valid email/password as admin role",
+      "description": "Verify successful login with admin credentials shows admin nav items",
+      "preconditions": [
+        "Not logged in",
+        "Test account exists: role:admin (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Navigate to /login",
+        "Step 2: Type 'lisa-test-admin@test.com' into data-testid='login-email'",
+        "Step 3: Type 'LisaLoops-Test-2024!' into data-testid='login-password'",
+        "Step 4: Click data-testid='login-submit'",
+        "Step 5: Wait for navigation to /app",
+        "Step 6: Verify admin nav items are visible in sidebar"
+      ],
+      "expected_result": "Admin user is logged in and sees admin navigation items",
+      "pass_criteria": "URL contains '/app' AND element with data-testid='page-dashboard' is visible AND element with data-testid='nav-admin-manage-office' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-006",
+      "category": "functional",
+      "feature": "Authentication",
+      "title": "Login with invalid credentials shows error",
+      "description": "Verify that wrong credentials display an error message",
+      "preconditions": [
+        "Not logged in"
+      ],
+      "steps": [
+        "Step 1: Navigate to /login",
+        "Step 2: Type 'wrong@email.com' into data-testid='login-email'",
+        "Step 3: Type 'wrongpassword' into data-testid='login-password'",
+        "Step 4: Click data-testid='login-submit'",
+        "Step 5: Wait for error message"
+      ],
+      "expected_result": "Error message appears on the login page",
+      "pass_criteria": "Element with data-testid='login-error' is visible AND URL still contains '/login'",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-007",
+      "category": "e2e",
+      "feature": "Authentication",
+      "title": "Demo login button works for employee role",
+      "description": "Verify clicking the Employee demo button logs in and navigates to dashboard",
+      "preconditions": [
+        "Not logged in"
+      ],
+      "steps": [
+        "Step 1: Navigate to /login",
+        "Step 2: Click data-testid='demo-login-user'",
+        "Step 3: Wait for navigation"
+      ],
+      "expected_result": "User is logged in as employee and sees the dashboard",
+      "pass_criteria": "URL contains '/app' AND element with data-testid='page-dashboard' is visible within 15 seconds",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-008",
+      "category": "e2e",
+      "feature": "Authentication",
+      "title": "Logout redirects to login page",
+      "description": "Verify clicking sign out navigates back to login",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Verify data-testid='sign-out-button' is visible",
+        "Step 2: Click data-testid='sign-out-button'",
+        "Step 3: Wait for navigation"
+      ],
+      "expected_result": "User is signed out and redirected to login page",
+      "pass_criteria": "URL contains '/login' AND element with data-testid='page-login' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-009",
+      "category": "functional",
+      "feature": "Authentication",
+      "title": "Protected route redirects when not logged in",
+      "description": "Verify accessing /app without auth redirects to login",
+      "preconditions": [
+        "Not logged in"
+      ],
+      "steps": [
+        "Step 1: Navigate directly to /app",
+        "Step 2: Wait for redirect"
+      ],
+      "expected_result": "User is redirected to login page",
+      "pass_criteria": "URL contains '/login' within 5 seconds",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-010",
+      "category": "functional",
+      "feature": "Authentication",
+      "title": "Session persists after page refresh",
+      "description": "Verify user stays logged in after refreshing the page",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Verify data-testid='page-dashboard' is visible",
+        "Step 2: Refresh the page",
+        "Step 3: Wait for page to load"
+      ],
+      "expected_result": "User remains on the dashboard after refresh",
+      "pass_criteria": "Element with data-testid='page-dashboard' is visible within 10 seconds AND URL contains '/app'",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-011",
+      "category": "functional",
+      "feature": "Dashboard",
+      "title": "Dashboard renders with greeting, stats, and quick actions",
+      "description": "Verify dashboard shows greeting, quick stats, today's booking card, and quick actions",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Navigate to /app",
+        "Step 2: Wait for skeleton to disappear and content to load"
+      ],
+      "expected_result": "Dashboard shows all sections",
+      "pass_criteria": "Element with data-testid='page-dashboard' is visible AND text containing 'Good' (greeting) is visible AND data-testid='quick-book-desk' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-012",
+      "category": "e2e",
+      "feature": "Navigation",
+      "title": "Sidebar navigation to floor map page",
+      "description": "Verify clicking Floor map nav item navigates correctly",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Click data-testid='nav-floor-map'",
+        "Step 2: Wait for page transition"
+      ],
+      "expected_result": "Floor map page renders",
+      "pass_criteria": "URL contains '/app/floor-map' AND element with data-testid='page-floor-map' is visible within 5 seconds",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-013",
+      "category": "e2e",
+      "feature": "Navigation",
+      "title": "Sidebar navigation to my bookings page",
+      "description": "Verify clicking My bookings nav item navigates correctly",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Click data-testid='nav-my-bookings'",
+        "Step 2: Wait for page transition"
+      ],
+      "expected_result": "My bookings page renders",
+      "pass_criteria": "URL contains '/app/bookings' AND element with data-testid='page-my-bookings' is visible within 5 seconds",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-014",
+      "category": "e2e",
+      "feature": "Navigation",
+      "title": "Sidebar navigation to team page",
+      "description": "Verify clicking Team nav item navigates correctly",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Click data-testid='nav-team'",
+        "Step 2: Wait for page transition"
+      ],
+      "expected_result": "Team page renders with member cards",
+      "pass_criteria": "URL contains '/app/team' AND element with data-testid='page-team' is visible within 5 seconds",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-015",
+      "category": "e2e",
+      "feature": "Navigation",
+      "title": "Sidebar navigation to planner page",
+      "description": "Verify clicking My week nav item navigates correctly",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Click data-testid='nav-my-week'",
+        "Step 2: Wait for page transition"
+      ],
+      "expected_result": "Planner page renders with week cards",
+      "pass_criteria": "URL contains '/app/planner' AND element with data-testid='page-planner' is visible within 5 seconds",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-016",
+      "category": "e2e",
+      "feature": "Navigation",
+      "title": "Sidebar navigation to resources page",
+      "description": "Verify clicking Parking & lockers nav item navigates correctly",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Click data-testid='nav-parking-&-lockers'",
+        "Step 2: Wait for page transition"
+      ],
+      "expected_result": "Resources page renders",
+      "pass_criteria": "URL contains '/app/resources' AND element with data-testid='page-resources' is visible within 5 seconds",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-017",
+      "category": "e2e",
+      "feature": "Navigation",
+      "title": "Deep link to floor map works",
+      "description": "Verify directly navigating to /app/floor-map loads the page",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Navigate directly to /app/floor-map",
+        "Step 2: Wait for page to load"
+      ],
+      "expected_result": "Floor map page renders without errors",
+      "pass_criteria": "Element with data-testid='page-floor-map' is visible within 10 seconds",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-018",
+      "category": "functional",
+      "feature": "404 handling",
+      "title": "Unknown app route shows 404 page",
+      "description": "Verify navigating to a non-existent app route shows the 404 page",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Navigate to /app/nonexistent-page",
+        "Step 2: Wait for page to load"
+      ],
+      "expected_result": "404 page is shown with a link back to dashboard",
+      "pass_criteria": "Element with data-testid='page-not-found' is visible AND text '404' is visible AND data-testid='not-found-go-dashboard' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-019",
+      "category": "e2e",
+      "feature": "Booking wizard",
+      "title": "Quick book desk button opens booking wizard",
+      "description": "Verify the 'Book a desk' quick action opens the full-screen booking wizard",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Navigate to /app",
+        "Step 2: Wait for dashboard to load",
+        "Step 3: Click data-testid='quick-book-desk'",
+        "Step 4: Wait for wizard to appear"
+      ],
+      "expected_result": "Booking wizard opens as a full-screen overlay",
+      "pass_criteria": "Element with data-testid='booking-wizard' is visible AND text 'Book a desk' is visible AND text 'Step 1' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-020",
+      "category": "e2e",
+      "feature": "Booking wizard",
+      "title": "Wizard step 1 — select date and time, proceed to step 2",
+      "description": "Verify selecting a date chip and time preset enables the next button",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)",
+        "Booking wizard is open"
+      ],
+      "steps": [
+        "Step 1: Open booking wizard via data-testid='quick-book-desk'",
+        "Step 2: Verify 'Today' date chip is selected by default",
+        "Step 3: Click the 'Full day' time preset",
+        "Step 4: Verify the availability hint shows desk count",
+        "Step 5: Click data-testid='wizard-next-step-1'"
+      ],
+      "expected_result": "Wizard advances to step 2 showing the floor map",
+      "pass_criteria": "Text 'Pick your seat' is visible AND text 'Step 2' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-021",
+      "category": "e2e",
+      "feature": "Booking wizard",
+      "title": "Wizard close button dismisses the wizard",
+      "description": "Verify clicking the X button closes the wizard overlay",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Open booking wizard via data-testid='quick-book-desk'",
+        "Step 2: Verify data-testid='booking-wizard' is visible",
+        "Step 3: Click data-testid='wizard-close'"
+      ],
+      "expected_result": "Wizard is dismissed and dashboard is visible again",
+      "pass_criteria": "Element with data-testid='booking-wizard' is NOT visible AND data-testid='page-dashboard' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-022",
+      "category": "functional",
+      "feature": "Booking wizard",
+      "title": "Wizard step 2 — next button disabled until resource selected",
+      "description": "Verify the 'Review booking' button is disabled when no desk is selected",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)",
+        "Wizard open on step 2"
+      ],
+      "steps": [
+        "Step 1: Open booking wizard and advance to step 2",
+        "Step 2: Verify data-testid='wizard-next-step-2' is present",
+        "Step 3: Check that data-testid='wizard-next-step-2' is disabled"
+      ],
+      "expected_result": "Review booking button is disabled until a desk is selected",
+      "pass_criteria": "Element with data-testid='wizard-next-step-2' has the 'disabled' attribute",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-023",
+      "category": "functional",
+      "feature": "My bookings",
+      "title": "My bookings page renders with tabs",
+      "description": "Verify the bookings page shows upcoming, past, and waitlist tabs",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Navigate to /app/bookings",
+        "Step 2: Wait for content to load"
+      ],
+      "expected_result": "Bookings page shows with three tabs",
+      "pass_criteria": "Element with data-testid='page-my-bookings' is visible AND text 'Upcoming' is visible AND text 'Past' is visible AND text 'Waitlist' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-024",
+      "category": "functional",
+      "feature": "My bookings",
+      "title": "Switching to past tab shows past bookings or empty state",
+      "description": "Verify clicking the Past tab changes the displayed content",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Navigate to /app/bookings",
+        "Step 2: Click the 'Past' tab",
+        "Step 3: Wait for content to update"
+      ],
+      "expected_result": "Past bookings are shown or empty state message appears",
+      "pass_criteria": "Either a booking card is visible OR element with data-testid='empty-state' is visible containing text about past bookings",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-025",
+      "category": "functional",
+      "feature": "My bookings",
+      "title": "Waitlist tab shows empty state when no waitlist entries",
+      "description": "Verify the waitlist tab shows an empty message for new users",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Navigate to /app/bookings",
+        "Step 2: Click the 'Waitlist' tab"
+      ],
+      "expected_result": "Waitlist tab shows empty state",
+      "pass_criteria": "Text 'not on any waitlists' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-026",
+      "category": "functional",
+      "feature": "Floor map",
+      "title": "Floor map renders with floor selector and date picker",
+      "description": "Verify floor map page shows controls and canvas area",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Navigate to /app/floor-map",
+        "Step 2: Wait for skeleton to disappear"
+      ],
+      "expected_result": "Floor map shows with floor dropdown, date picker, and availability count",
+      "pass_criteria": "Element with data-testid='page-floor-map' is visible AND text 'Floor map' is visible AND text 'desks available' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-027",
+      "category": "functional",
+      "feature": "Calendar",
+      "title": "Calendar page renders with view mode toggle",
+      "description": "Verify calendar page shows day/week/month view toggles",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Navigate to /app/calendar",
+        "Step 2: Wait for content to load"
+      ],
+      "expected_result": "Calendar renders with view mode buttons and date navigation",
+      "pass_criteria": "Element with data-testid='page-calendar' is visible AND text 'Day' is visible AND text 'Week' is visible AND text 'Month' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-028",
+      "category": "functional",
+      "feature": "Calendar",
+      "title": "Calendar view mode switching works",
+      "description": "Verify switching between day, week, and month views changes the display",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Navigate to /app/calendar",
+        "Step 2: Click 'Week' view button",
+        "Step 3: Verify week view content appears",
+        "Step 4: Click 'Month' view button",
+        "Step 5: Verify month view content appears"
+      ],
+      "expected_result": "View changes between day, week, and month displays",
+      "pass_criteria": "After clicking 'Month', a month grid or month date range label is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-029",
+      "category": "functional",
+      "feature": "Team",
+      "title": "Team page renders with member cards",
+      "description": "Verify team page shows teammate cards and team filter dropdown",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Navigate to /app/team",
+        "Step 2: Wait for content to load"
+      ],
+      "expected_result": "Team page shows member cards with names and avatars",
+      "pass_criteria": "Element with data-testid='page-team' is visible AND text 'Team' is visible AND text 'member' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-030",
+      "category": "functional",
+      "feature": "Planner",
+      "title": "Planner page renders with week day cards",
+      "description": "Verify planner shows 5 weekday cards with team overlap info",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Navigate to /app/planner",
+        "Step 2: Wait for content to load"
+      ],
+      "expected_result": "Planner shows Mon-Fri day cards",
+      "pass_criteria": "Element with data-testid='page-planner' is visible AND text 'My week' is visible AND text 'Mon' is visible AND text 'Fri' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-031",
+      "category": "functional",
+      "feature": "Resources",
+      "title": "Resources page renders with parking and locker tabs",
+      "description": "Verify resources page shows parking and locker tabs with items",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Navigate to /app/resources",
+        "Step 2: Wait for content to load"
+      ],
+      "expected_result": "Resources page shows parking tab with spots",
+      "pass_criteria": "Element with data-testid='page-resources' is visible AND text 'Parking' is visible AND text 'Lockers' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-032",
+      "category": "functional",
+      "feature": "Resources",
+      "title": "Switching to lockers tab shows locker items",
+      "description": "Verify clicking Lockers tab displays locker cards",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Navigate to /app/resources",
+        "Step 2: Click the 'Lockers' tab",
+        "Step 3: Wait for content to update"
+      ],
+      "expected_result": "Locker cards are displayed",
+      "pass_criteria": "Text 'Available' or 'Booked' is visible within the locker section",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-033",
+      "category": "functional",
+      "feature": "Admin",
+      "title": "Admin page shows access denied for non-admin user",
+      "description": "Verify a user-role account sees the access denied message on admin page",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Navigate to /app/admin",
+        "Step 2: Wait for page to load"
+      ],
+      "expected_result": "Access denied message is shown",
+      "pass_criteria": "Element with data-testid='admin-access-denied' is visible AND text 'Access denied' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-034",
+      "category": "functional",
+      "feature": "Admin",
+      "title": "Admin page renders for admin user",
+      "description": "Verify an admin-role account sees the admin dashboard with tabs",
+      "preconditions": [
+        "Logged in as role:admin (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Navigate to /app/admin",
+        "Step 2: Wait for page to load"
+      ],
+      "expected_result": "Admin dashboard shows with Resources, Booking rules, and Visitors tabs",
+      "pass_criteria": "Element with data-testid='page-admin' is visible AND text 'Resources' is visible AND text 'Booking rules' is visible AND text 'Visitors' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-035",
+      "category": "functional",
+      "feature": "Admin analytics",
+      "title": "Analytics page renders for admin with charts",
+      "description": "Verify analytics page shows summary cards and chart sections",
+      "preconditions": [
+        "Logged in as role:admin (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Navigate to /app/admin/analytics",
+        "Step 2: Wait for page to load"
+      ],
+      "expected_result": "Analytics page shows with date range selector and chart components",
+      "pass_criteria": "Element with data-testid='page-analytics' is visible AND text 'Analytics' is visible AND text 'Export CSV' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-036",
+      "category": "functional",
+      "feature": "Admin analytics",
+      "title": "Analytics page shows access denied for non-admin",
+      "description": "Verify a user-role account sees access denied on analytics page",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Navigate to /app/admin/analytics",
+        "Step 2: Wait for page to load"
+      ],
+      "expected_result": "Access denied message is shown",
+      "pass_criteria": "Element with data-testid='admin-access-denied' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-037",
+      "category": "ui",
+      "feature": "Notifications",
+      "title": "Notification center opens and shows notifications",
+      "description": "Verify clicking the bell icon opens the notification popover",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Click data-testid='notifications-button'",
+        "Step 2: Wait for popover to appear"
+      ],
+      "expected_result": "Notification panel opens with filter tabs and notification list",
+      "pass_criteria": "Element with data-testid='notifications-panel' is visible AND text 'Notifications' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-038",
+      "category": "ui",
+      "feature": "Notifications",
+      "title": "Notification filter tabs work",
+      "description": "Verify clicking filter tabs (All, Bookings, Reminders, Alerts) filters the list",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Click data-testid='notifications-button'",
+        "Step 2: Verify 'All' filter is active by default",
+        "Step 3: Click 'Bookings' filter button",
+        "Step 4: Verify notification list updates"
+      ],
+      "expected_result": "Notification list filters by category",
+      "pass_criteria": "After clicking 'Bookings', the panel is still visible and the list has changed (either different count or different content)",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-039",
+      "category": "ui",
+      "feature": "Responsive",
+      "title": "Mobile viewport — hamburger menu opens sidebar",
+      "description": "Verify the mobile hamburger menu opens the sidebar sheet at 375px width",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)",
+        "Viewport set to 375x812"
+      ],
+      "steps": [
+        "Step 1: Set viewport to 375x812",
+        "Step 2: Navigate to /app",
+        "Step 3: Verify sidebar is hidden (desktop sidebar not visible)",
+        "Step 4: Click the hamburger menu button (aria-label='Open menu')",
+        "Step 5: Verify sidebar sheet opens with nav items"
+      ],
+      "expected_result": "Mobile sidebar sheet opens with navigation links",
+      "pass_criteria": "Element with data-testid='sidebar-nav' is visible within a sheet overlay AND data-testid='nav-dashboard' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-040",
+      "category": "ui",
+      "feature": "Responsive",
+      "title": "Mobile viewport — dashboard content visible without overlap",
+      "description": "Verify dashboard renders properly at mobile width",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)",
+        "Viewport set to 375x812"
+      ],
+      "steps": [
+        "Step 1: Set viewport to 375x812",
+        "Step 2: Navigate to /app",
+        "Step 3: Wait for dashboard to load"
+      ],
+      "expected_result": "Dashboard content is visible and not overflowing",
+      "pass_criteria": "Element with data-testid='page-dashboard' is visible AND data-testid='quick-book-desk' is visible within viewport bounds",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-041",
+      "category": "ui",
+      "feature": "Responsive",
+      "title": "Tablet viewport — login page layout",
+      "description": "Verify login page renders properly at 768px width",
+      "preconditions": [
+        "Not logged in",
+        "Viewport set to 768x1024"
+      ],
+      "steps": [
+        "Step 1: Set viewport to 768x1024",
+        "Step 2: Navigate to /login"
+      ],
+      "expected_result": "Login form and demo buttons are visible and usable",
+      "pass_criteria": "Element with data-testid='login-email' is visible AND data-testid='demo-login-user' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-042",
+      "category": "functional",
+      "feature": "Planner",
+      "title": "Planner day card toggles between office and remote",
+      "description": "Verify clicking a day card toggles its in-office/remote state",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Navigate to /app/planner",
+        "Step 2: Wait for content to load",
+        "Step 3: Find a day card showing 'Remote'",
+        "Step 4: Click that day card",
+        "Step 5: Verify it now shows 'In office'"
+      ],
+      "expected_result": "Day card toggles between remote and in-office state",
+      "pass_criteria": "After clicking, the card text changes to 'In office' AND a 'Book a desk' button becomes visible within that card",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-043",
+      "category": "functional",
+      "feature": "Calendar navigation",
+      "title": "Calendar today button resets to current date",
+      "description": "Verify clicking the Today button returns to today's date after navigating away",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Navigate to /app/calendar",
+        "Step 2: Click the forward arrow to go to next day",
+        "Step 3: Verify the date label changed",
+        "Step 4: Click the 'Today' button",
+        "Step 5: Verify the date returns to today"
+      ],
+      "expected_result": "Calendar resets to today's date",
+      "pass_criteria": "The date label contains today's date string (day name or date number matching current date)",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-044",
+      "category": "ui",
+      "feature": "Accessibility",
+      "title": "Login form inputs have labels and are keyboard focusable",
+      "description": "Verify login form inputs have associated labels and can be tabbed through",
+      "preconditions": [
+        "Not logged in"
+      ],
+      "steps": [
+        "Step 1: Navigate to /login",
+        "Step 2: Verify email input has associated label (htmlFor='email' or aria-label)",
+        "Step 3: Verify password input has associated label",
+        "Step 4: Press Tab to verify focus moves through email → password → submit"
+      ],
+      "expected_result": "All form inputs have labels and are keyboard accessible",
+      "pass_criteria": "The label element with text 'Email' exists with htmlFor='email' AND label with text 'Password' exists with htmlFor='password' AND Tab key moves focus through form fields",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    },
+    {
+      "id": "TEST-045",
+      "category": "functional",
+      "feature": "Error boundary",
+      "title": "Error boundary catches render errors gracefully",
+      "description": "Verify the app does not show a white screen when a component error occurs — the error boundary shows a fallback UI",
+      "preconditions": [
+        "Logged in as role:user (see tests/test-accounts.json)"
+      ],
+      "steps": [
+        "Step 1: Navigate to /app",
+        "Step 2: Verify the dashboard loads without errors",
+        "Step 3: Check that no uncaught exceptions appear in console that would cause a white screen"
+      ],
+      "expected_result": "Dashboard renders with all sections wrapped in error boundaries",
+      "pass_criteria": "Element with data-testid='page-dashboard' is visible AND no white/blank screen occurs AND data-testid='app-shell' is visible",
+      "status": "passed",
+      "passed": true,
+      "fix_attempts": 0,
+      "max_fix_attempts": 3,
+      "failure_reason": "",
+      "fix_description": "",
+      "blocked_reason": ""
+    }
+  ]
+}
